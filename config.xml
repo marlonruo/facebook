@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?> 
 <widget xmlns="http://www.w3.org/ns/widgets" 
 	xmlns:gap="http://phonegap.com/ns/1.0" 
-	id="com.phonegap.pgbfbtest" 
+	id="com.pgbfbtest" 
 	version="1.0.0">
 	
     <name>
@@ -17,9 +17,6 @@
 		<param name="APP_NAME" value="Opinion" /> <!-- FB App Namespace-->
 	</gap:plugin>
 
-    <author href="https://sub.example.com" email="someone@email.com">
-        Yourname
-    </author>
 
 	<!-- Customize your app and platform with the preference element. -->
 	<gap:plugin name="org.apache.cordova.battery-status" />
