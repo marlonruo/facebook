@@ -1,87 +1,49 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta name="msapplication-tap-highlight" content="no">
-        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
-        <title>Facebook Login</title>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
 
-        <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
- 
-		<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-		<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
 
-		<script src="http://code.ionicframework.com/nightly/js/ionic.bundle.js"></script>
-    	<script src="https://cdn.rawgit.com/driftyco/ng-cordova/master/dist/ng-cordova.min.js"></script>
-    	<script src="https://cdn.rawgit.com/nraboy/ng-cordova-oauth/master/dist/ng-cordova-oauth.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="lib/ratchet/ratchet.css">
+        <link rel="stylesheet" type="text/css" href="lib/ratchet/ratchet-theme-ios.css">
+        <link rel="stylesheet" type="text/css" href="css/app.css" />
+
+        <meta name="msapplication-tap-highlight" content="no" />
+        <title>Auth0 Cordova App</title>
+
+    </head>
+    <body class="home">
+        <header class="bar bar-nav">
+          <h1 class="title">Auth0 Sample</h1>
+        </header>
+        <div class="container">
+            <div class="login-page clearfix">
+              <div class="login-box auth0-box before content-padded">
+                <img src="https://i.cloudup.com/StzWWrY34s.png" />
+                <h3>Auth0 Example</h3>
+                <p>Zero friction identity infrastructure, built for developers</p>
+                <a class="btn btn-primary btn-lg btn-login btn-block">SignIn</a>
+              </div>
+              <div class="logged-in-box auth0-box logged-in content-padded" style="display: none;">
+                <img class="avatar"/>
+                <h2>Welcome <span class="nickname"></span></h2>
+                <button class="btn btn-lg btn-primary btn-api">Call API</button>
+              </div>
+            </div>
+        </div>
+
 
         <script type="text/javascript" src="cordova.js"></script>
-        <script type="text/javascript" src="cordova_plugins.js"></script>
-    </head>
-    <body>
-		<div ng-app="facebookApp">
-			<div ng-controller="mainCtrl">
-			</div>   
-		</div>
 
-		<div data-role="page" id="home">
-			<div data-role="header">
-		    	<h1>Login</h1>
-		  	</div>
+        <script src="lib/jQuery.js" type="text/javascript"></script>
 
-		  	<div data-role="main" class="ui-content">
-		    	<p>You need to login to view your Facebook profile information</p>
-		    	<a target="_blank" href="#" onclick="login()" style="text-decoration: none"><button>Login using Facebook</button></a>
-		  	</div>
-		</div>
+        <!-- Auth0 widget script -->
+        <script src="lib/lock-7.12.js"></script>
+        <script type="text/javascript" src="js/auth0-variables.js"></script>
+        <script type="text/javascript" src="js/app.js"></script>
 
-		<div data-role="page" id="profile">
-			<div data-role="header">
-				<a target="_blank" href="#home" class="ui-btn ui-icon-home ui-btn-icon-left">Home</a>
-				<h1>Profile</h1>
-			</div>
-			<div data-role="main" class="ui-content" id="listTable"></div>
-		</div>
-
-    	<script type="text/javascript">
-			angular.module("facebookApp", ["ionic", "ngCordova"]).controller("mainCtrl", ["$scope", "$cordovaOauth", "$http", function($scope, $cordovaOauth, $http) {
-				window.cordovaOauth = $cordovaOauth;
-				window.http = $http;
-			}]);
-
-			function login()
-			{
-				facebookLogin(window.cordovaOauth, window.http);
-			}
-
-			function facebookLogin($cordovaOauth, $http)
-			{
-				$cordovaOauth.facebook("225937201075420", ["email", "public_profile"], {redirect_uri: "http://localhost/callback"}).then(function(result){
-					displayData($http, result.access_token);
-				},  function(error){
-						alert("Error: " + error);
-				});
-			}
-			
-	        function displayData($http, access_token)
-	        {
-				$http.get("https://graph.facebook.com/v2.2/me", {params: {access_token: access_token, fields: "name,gender,location,picture", format: "json" }}).then(function(result) {
-	            	var name = result.data.name;
-	            	var gender = result.data.gender;
-	            	var location = result.data.location;
-	            	var picture = result.data.picture;
-	            	var html = '<table id="table" data-role="table" data-mode="column" class="ui-responsive"><thead><tr><th>Field</th><th>Info</th></tr></thead><tbody>';
-	            	html = html + "<tr><td>" + "Name" + "</td><td>" + name + "</td></tr>";
-	            	html = html + "<tr><td>" + "Gender" + "</td><td>" + gender + "</td></tr>";
-	            	html = html + "<tr><td>" + "Picture" + "</td><td><img src='" + picture.data.url + "' /></td></tr>";
-	        		html = html + "</tbody></table>";
-	        		
-	        		document.getElementById("listTable").innerHTML = html;
-	        		$.mobile.changePage($("#profile"), "slide", true, true);
-	            }, function(error) {
-	                alert("There was a problem getting your profile.  Check the logs for details.");
-	                console.log(error);
-	            });
-	        }
-    	</script>
     </body>
 </html>
